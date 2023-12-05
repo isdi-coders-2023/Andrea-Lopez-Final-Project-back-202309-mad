@@ -1,5 +1,6 @@
-import { Repository } from '../repos/repo';
 import { NextFunction, Request, Response } from 'express';
+
+import { Repository } from '../repo/repo.js';
 import { MediaFiles } from '../services/media.files.js';
 
 export abstract class Controller<X extends { id: unknown }> {

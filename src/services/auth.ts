@@ -6,7 +6,7 @@ import { HttpError } from '../types/http.error.js';
 import { TokenPayload } from '../types/token.payload.js';
 
 const debug = createDebug('SKINS:skins:router');
-debug('Imported');
+debug('Imported from Auth');
 
 export abstract class Auth {
   static secret = process.env.JWT_SECRET;

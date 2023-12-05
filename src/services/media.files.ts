@@ -9,8 +9,8 @@ const debug = createDebug('SKINS:mediaFiles');
 export class MediaFiles {
   constructor() {
     cloudinary.config({
-      cloud_name: 'dbhsorjvc',
-      api_key: '121136356938468',
+      cloud_name: 'dgnncaecc',
+      api_key: '727831547562915',
       api_secret: process.env.CLOUDINARY_SECRET,
       secure: true,
     });
