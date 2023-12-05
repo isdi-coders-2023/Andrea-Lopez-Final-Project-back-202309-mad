@@ -1,15 +1,12 @@
-import createDebug from 'debug';
-import { User } from '../entities/user.js';
+import { hash, compare } from 'bcrypt';
+import 'dotenv/config';
 import jwt from 'jsonwebtoken';
-import { hash } from 'bcrypt';
+import createDebug from 'debug';
+import { HttpError } from '../types/http.error.js';
+import { TokenPayload } from '../types/token.payload.js';
 
-const debug = createDebug('PF:auth');
-debug('Importando desde Auth');
-
-export type TokenPayload = {
-  id: User['id'];
-  email: string;
-} & jwt.JwtPayload;
+const debug = createDebug('SKINS:skins:router');
+debug('Imported');
 
 export abstract class Auth {
   static secret = process.env.JWT_SECRET;
@@ -19,6 +16,10 @@ export abstract class Auth {
   }
 
   static compare(value: string, hash: string): Promise<boolean> {
+    return compare(value, hash);
+  }
+
+  static signJWT(payload: TokenPayload) {
     return jwt.sign(payload, Auth.secret!);
   }
 
