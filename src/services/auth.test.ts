@@ -25,7 +25,6 @@ describe('Given Auth abstract class', () => {
       expect(compare).toHaveBeenCalled();
       expect(result).toBe(true);
     });
-
     test('Then signJW has should...', () => {
       jwt.sign = jest.fn().mockReturnValue('test');
       const result = Auth.signJWT('' as unknown as TokenPayload);

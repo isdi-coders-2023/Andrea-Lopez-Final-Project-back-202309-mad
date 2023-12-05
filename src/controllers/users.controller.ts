@@ -7,7 +7,7 @@ import { LoginResponse } from '../types/login.response.js';
 import { HttpError } from '../types/http.error.js';
 import { UsersMongoRepo } from '../repo/users/users.mongo.repo.js';
 
-const debug = createDebug('PF:users:controller');
+const debug = createDebug('PF:controllers:users:controller');
 
 export class UsersController extends Controller<User> {
   constructor(protected repo: UsersMongoRepo) {
