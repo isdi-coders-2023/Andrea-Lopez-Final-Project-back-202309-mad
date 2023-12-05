@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "start:dev": "cross-env PORT=3500 DEBUG=W7E* nodemon dist/index.js",
+    "start:dev": "cross-env PORT=3000 DEBUG=PF* nodemon dist/index.js",
     "build:render": "tsc",
     "build": "tsc -w",
     "test": "jest",
@@ -17,7 +17,7 @@
     "api": "json-server --watch ./api/db.json"
   },
   "keywords": [],
-  "author": "eliasmr98",
+  "author": "Andrea Lopez",
   "license": "ISC",
   "prettier": {
     "singleQuote": true
