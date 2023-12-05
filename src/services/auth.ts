@@ -1,0 +1,32 @@
+import createDebug from 'debug';
+import { User } from '../entities/user.js';
+import jwt from 'jsonwebtoken';
+import { hash } from 'bcrypt';
+
+const debug = createDebug('PF:auth');
+debug('Importando desde Auth');
+
+export type TokenPayload = {
+  id: User['id'];
+  email: string;
+} & jwt.JwtPayload;
+
+export abstract class Auth {
+  static secret = process.env.JWT_SECRET;
+  static hash(value:string):Promise<string>{
+   const saltRound = 10 
+  return hash(value,saltRound) 
+  }
+  
+  static compare(value:string, hash:string): Promise<boolean> {
+    return jwt.sign(payload, Auth.secret!)
+  }
+
+  static verifyAndGetPayload(token:string){
+    try {
+      const result = jwt.verify(token, Auth.secret!)
+    } catch () {
+      
+    }
+  }
+}

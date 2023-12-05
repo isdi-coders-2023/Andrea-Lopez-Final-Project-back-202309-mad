@@ -2,7 +2,7 @@ import { Film } from './film';
 
 export type UserLogin = {
   email: string;
-  password: string;
+  passwd: string;
 };
 
 export type User = UserLogin & {
