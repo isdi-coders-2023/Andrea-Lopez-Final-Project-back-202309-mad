@@ -4,4 +4,5 @@ export interface Repository<X extends { id: unknown }> {
   create(_newItem: Omit<X, 'id'>): Promise<X>;
   update(_id: X['id'], _updatedItem: Partial<X>): Promise<X>;
   delete(_id: X['id']): Promise<void>;
+  search({ key, value }: { key: keyof X; value: unknown }): Promise<X[]>;
 }

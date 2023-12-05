@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { User } from '../../entities/user';
 
 const usersSchema = new Schema<User>({
