@@ -4,8 +4,7 @@ import jwt from 'jsonwebtoken';
 import createDebug from 'debug';
 import { HttpError } from '../types/http.error.js';
 import { TokenPayload } from '../types/token.payload.js';
-
-const debug = createDebug('SKINS:skins:router');
+const debug = createDebug('PF:auth');
 debug('Imported from Auth');
 
 export abstract class Auth {

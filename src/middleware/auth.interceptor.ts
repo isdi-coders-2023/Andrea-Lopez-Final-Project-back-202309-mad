@@ -1,7 +1,7 @@
 import createDebug from 'debug';
 import { NextFunction, Request, Response } from 'express';
-import { HttpError } from '../types/http.error';
-import { Auth } from '../services/auth';
+import { HttpError } from '../types/http.error.js';
+import { Auth } from '../services/auth.js';
 const debug = createDebug('PF:auth:interceptor');
 
 export class AuthInterceptor {

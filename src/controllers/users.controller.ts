@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import createDebug from 'debug';
 import { Auth } from '../services/auth.js';
 import { UsersMongoRepo } from '../repo/users/users.mongo.repo.js';
+import { HttpError } from '../types/http.error.js';
 
 const debug = createDebug('PF:users:controller');
 
@@ -25,6 +26,9 @@ export class UsersController {
       const result = req.body.userid
         ? await this.repo.getById(req.body.userid)
         : await this.repo.login(req.body);
+      if (!result) {
+        throw new HttpError(401, 'Invalid credentials');
+      }
 
       const data = {
         user: result,
@@ -41,9 +45,9 @@ export class UsersController {
     }
   }
 
-  async register(req: Request, res: Response, next: NextFunction) {
+  async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await this.repo.register(req.body);
+      const result = await this.repo.create(req.body);
       res.status(201);
       res.statusMessage = 'Created';
       res.json(result);

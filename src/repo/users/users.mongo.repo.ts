@@ -1,27 +1,27 @@
 import createDebug from 'debug';
-import { Repository } from '../repo.js';
+import { Repository } from '../repo';
 import { UserLogin, User } from '../../entities/user.js';
 import { UserModel } from './users.mongo.models.js';
 import { HttpError } from '../../types/http.error.js';
 import { Auth } from '../../services/auth.js';
 
-const debug = createDebug('W7E:users:mongo:repo');
+const debug = createDebug('PF:users:mongo:repo');
 
 export class UsersMongoRepo implements Repository<User> {
   constructor() {
     debug('Instantiated');
   }
 
-  async register(newItem: Omit<User, 'id'>): Promise<User> {
+  async create(newItem: Omit<User, 'id'>): Promise<User> {
     newItem.passwd = await Auth.hash(newItem.passwd);
     const result: User = await UserModel.create(newItem);
     return result;
   }
 
-  async login(UserLogin: UserLogin): Promise<User> {
-    debug('login email', UserLogin.email);
-    const result = await UserModel.findOne({ email: UserLogin.email }).exec();
-    if (!result || !(await Auth.compare(UserLogin.passwd, result.passwd)))
+  async login(userLogin: UserLogin): Promise<User> {
+    debug('login email', userLogin.email);
+    const result = await UserModel.findOne({ email: userLogin.email }).exec();
+    if (!result || !(await Auth.compare(userLogin.passwd, result.passwd)))
       throw new HttpError(401, 'Unauthorized');
     return result;
   }
