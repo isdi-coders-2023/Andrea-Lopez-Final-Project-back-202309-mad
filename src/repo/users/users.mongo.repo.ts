@@ -12,7 +12,7 @@ export class UsersMongoRepo implements Repository<User> {
     debug('Instantiated');
   }
 
-  async create(newItem: Omit<User, 'id'>): Promise<User> {
+  async register(newItem: Omit<User, 'id'>): Promise<User> {
     newItem.passwd = await Auth.hash(newItem.passwd);
     const result: User = await UserModel.create(newItem);
     return result;

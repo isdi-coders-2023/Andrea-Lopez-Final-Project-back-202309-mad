@@ -1,26 +1,32 @@
-import { NextFunction, Request, Response } from 'express';
+/* eslint-disable no-unused-vars */
+import { Request, Response, NextFunction } from 'express';
 import createDebug from 'debug';
 import { Auth } from '../services/auth.js';
-import { User } from '../entities/user.js';
-import { Controller } from './controller.js';
-import { LoginResponse } from '../types/login.response.js';
 import { UsersMongoRepo } from '../repo/users/users.mongo.repo.js';
 
-const debug = createDebug('PF:controllers:users:controller');
+const debug = createDebug('PF:users:controller');
 
-export class UsersController extends Controller<User> {
+export class UsersController {
   constructor(protected repo: UsersMongoRepo) {
-    super(repo);
     debug('Instantiated');
+  }
+
+  async getAll(_req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await this.repo.getAll();
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
   }
 
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = req.body.userId
-        ? await this.repo.getById(req.body.userId)
+      const result = req.body.userid
+        ? await this.repo.getById(req.body.userid)
         : await this.repo.login(req.body);
 
-      const data: LoginResponse = {
+      const data = {
         user: result,
         token: Auth.signJWT({
           id: result.id,
@@ -35,15 +41,14 @@ export class UsersController extends Controller<User> {
     }
   }
 
-  // Async create(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     if (!req.file)
-  //       throw new HttpError(406, 'Not Acceptable', 'Invalid multer file');
-  //     const imgData = await this.cloudinaryService.uploadImage(req.file.path);
-  //     req.body.avatar = imgData;
-  //     super.create(req, res, next);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+  async register(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await this.repo.register(req.body);
+      res.status(201);
+      res.statusMessage = 'Created';
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
