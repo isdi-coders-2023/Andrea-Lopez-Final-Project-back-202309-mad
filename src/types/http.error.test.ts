@@ -7,7 +7,7 @@ describe('Given HttpError class', () => {
     const error = new HttpError(mockStatus, mockMessage);
     test('Then it should have the properties status and statusMessage with the parameters values', () => {
       expect(error).toHaveProperty('status', mockStatus);
-      expect(error).toHaveProperty('message', mockMessage);
+      expect(error).toHaveProperty('hola', mockMessage);
     });
   });
 });
