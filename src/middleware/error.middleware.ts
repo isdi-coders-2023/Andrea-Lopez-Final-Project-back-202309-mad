@@ -7,7 +7,7 @@ const debug = createDebug('PF:error:middleware');
 
 debug('Starting Error Middleware');
 
-export const ErrorMiddleware = (
+export const errorMiddleware = (
   error: Error,
   _req: Request,
   res: Response,
