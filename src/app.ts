@@ -3,7 +3,7 @@ import express from 'express';
 import morgan from 'morgan';
 import createDebug from 'debug';
 import { usersRouter } from './router/users.router.js';
-import { ErrorMiddleware } from './middleware/error.middleware.js';
+import { errorMiddleware } from './middleware/error.middleware.js';
 
 const debug = createDebug('PF:app');
 
@@ -18,4 +18,4 @@ app.use(express.static('public'));
 
 app.use('/users', usersRouter);
 
-app.use(ErrorMiddleware);
+app.use(errorMiddleware);
