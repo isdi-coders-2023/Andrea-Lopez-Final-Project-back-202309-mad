@@ -31,5 +31,19 @@ describe('Given Auth abstract class', () => {
       expect(jwt.sign).toHaveBeenCalled();
       expect(result).toBe('test');
     });
+    test('Then verifyAndGetPayload should...', () => {
+      jwt.verify = jest.fn().mockReturnValue({});
+      const result = Auth.verifyAndGetPayload('');
+      expect(jwt.verify).toHaveBeenCalled();
+      expect(result).toStrictEqual({});
+    });
+  });
+  describe('When we use its methods with errors', () => {
+    // Cómo testear un error síncrono
+    test('Then verifyAndGetPayload should...', () => {
+      jwt.verify = jest.fn().mockReturnValue('');
+      expect(() => Auth.verifyAndGetPayload('')).toThrow();
+      expect(jwt.verify).toHaveBeenCalled();
+    });
   });
 });
