@@ -13,8 +13,9 @@ const controller = new UsersController(repo);
 const interceptor = new AuthInterceptor();
 
 usersRouter.post('/register', controller.create.bind(controller));
+
 usersRouter.patch(
   '/login',
-  interceptor.authorization.bind(controller),
+
   controller.login.bind(controller)
 );

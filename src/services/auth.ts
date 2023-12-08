@@ -2,8 +2,10 @@ import { hash, compare } from 'bcrypt';
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import createDebug from 'debug';
+
 import { HttpError } from '../types/http.error.js';
 import { TokenPayload } from '../types/token.payload.js';
+
 const debug = createDebug('PF:auth');
 debug('Imported from Auth');
 
@@ -14,7 +16,7 @@ export abstract class Auth {
     return hash(value, saltRound);
   }
 
-  static comparison(value: string, hash: string): Promise<boolean> {
+  static compare(value: string, hash: string): Promise<boolean> {
     return compare(value, hash);
   }
 

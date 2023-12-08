@@ -11,9 +11,6 @@ describe('Given UsersMongoRepo class', () => {
     const exec = jest.fn().mockResolvedValue('login');
     beforeEach(() => {
       const mockQueryMethod = jest.fn().mockReturnValue({
-        populate: jest.fn().mockReturnValue({
-          exec,
-        }),
         exec,
       });
       UserModel.create = jest.fn().mockReturnValue('Created');
@@ -25,17 +22,18 @@ describe('Given UsersMongoRepo class', () => {
       const result = await repo.create({} as Omit<User, 'id'>);
       // Expect(Auth.hash).toHaveBeenCalled();
       expect(UserModel.create).toHaveBeenCalled();
-      expect(result).toBe('Test');
+      expect(result).toBe('login');
     });
-    // Test('Then it should execute login', async () => {
-    //   const result = await repo.login({ email: '' as UserLogin });
-    //   expect(UserModel.findOne).toHaveBeenCalled();
-    //   expect(result).toHaveBeenCalled('Test');
-    // });
+
+    test('Then it should execute login', async () => {
+      const result = await repo.login({ email: '' } as UserLogin);
+      expect(UserModel.findOne).toHaveBeenCalled();
+      expect(result).toBe('login');
+    });
 
     test('Then it should execute getAll', async () => {
       const result = await repo.getAll();
-      expect(result).toBe('test');
+      expect(result).toBe('login');
     });
   });
   describe('When we instantiate iw with errors', () => {
@@ -43,9 +41,6 @@ describe('Given UsersMongoRepo class', () => {
     const exec = jest.fn().mockRejectedValue(mockError);
     beforeEach(() => {
       const mockQueryMethod = jest.fn().mockReturnValue({
-        populate: jest.fn().mockReturnValue({
-          exec,
-        }),
         exec,
       });
       UserModel.findOne = mockQueryMethod;
