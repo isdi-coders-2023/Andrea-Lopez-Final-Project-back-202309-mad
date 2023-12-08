@@ -1,8 +1,6 @@
-import { Film } from './film';
-
 export type UserLogin = {
   email: string;
-  password: string;
+  passwd: string;
 };
 
 export type User = UserLogin & {
@@ -10,14 +8,4 @@ export type User = UserLogin & {
   name: string;
   surname: string;
   age: number;
-  films: Film[];
-};
-
-export type ImgData = {
-  publicId: string;
-  size: number;
-  width: number;
-  height: string;
-  format: string;
-  url: string;
 };
