@@ -24,8 +24,8 @@ export class UsersController {
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       const result = req.body.userid;
-
       await this.repo.login(req.body);
+
       if (!result) {
         throw new HttpError(401, 'Invalid credentials');
       }
@@ -48,6 +48,10 @@ export class UsersController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const result = await this.repo.create(req.body);
+      const token = Auth.signJWT({
+        id: result.id,
+        email: result.email,
+      });
       res.status(201);
       res.statusMessage = 'Created';
       res.json(result);
