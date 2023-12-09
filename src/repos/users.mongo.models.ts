@@ -12,11 +12,16 @@ const usersSchema = new Schema<User>({
     required: true,
   },
 
-  name: String,
-
-  surname: String,
+  name: {
+    type: String,
+  },
+  surname: {
+    type: String,
+  },
+  age: {
+    type: String,
+  },
 });
-
 usersSchema.set('toJSON', {
   transform(_document, returnedObject) {
     returnedObject.id = returnedObject._id;

@@ -11,21 +11,21 @@ export class UsersMongoRepo implements Repository<User> {
     debug('Instantiated');
   }
 
+  async getAll(): Promise<User[]> {
+    const result = await UserModel.find().exec();
+    return result;
+  }
+
   async create(newItem: Omit<User, 'id'>): Promise<User> {
     newItem.passwd = await Auth.hash(newItem.passwd);
     const result: User = await UserModel.create(newItem);
     return result;
   }
 
-  async login(UserLogin: UserLogin): Promise<User> {
-    const result = await UserModel.findOne({ email: UserLogin.email }).exec();
-    if (!result || !(await Auth.compare(UserLogin.passwd, result.passwd)))
+  async login(loginUser: UserLogin): Promise<User> {
+    const result = await UserModel.findOne({ email: loginUser.email }).exec();
+    if (!result || !(await Auth.compare(loginUser.passwd, result.passwd)))
       throw new HttpError(401, 'Unauthorized');
-    return result;
-  }
-
-  async getAll(): Promise<User[]> {
-    const result = await UserModel.find().exec();
     return result;
   }
 }
