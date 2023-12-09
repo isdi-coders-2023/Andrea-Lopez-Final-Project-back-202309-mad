@@ -1,42 +1,29 @@
-/* eslint-disable no-unused-vars */
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import createDebug from 'debug';
+import { HttpError } from '../types/http.error.js';
 import { Auth } from '../services/auth.js';
 import { UsersMongoRepo } from '../repos/users.mongo.repo.js';
-import { HttpError } from '../types/http.error.js';
 
-const debug = createDebug('PF:users:controller');
+const debugServer = createDebug('PF:controllers:users');
 
 export class UsersController {
-  constructor(protected repo: UsersMongoRepo) {
-    debug('Instantiated');
-  }
-
-  async getAll(_req: Request, res: Response, next: NextFunction) {
-    try {
-      const result = await this.repo.getAll();
-      res.json(result);
-    } catch (error) {
-      next(error);
-    }
+  constructor(private repo: UsersMongoRepo) {
+    this.repo = repo;
+    debugServer('Starting controller...');
   }
 
   async login(req: Request, res: Response, next: NextFunction) {
     try {
+      debugServer('Controller body login:', req.body);
+      // If (!req.body) throw new Error('Invalid body');
+      if (!req.body) throw new HttpError(400, 'Bad Request');
       const result = await this.repo.login(req.body);
-
-      if (!result) {
-        throw new HttpError(401, 'Invalid credentials');
-      }
-
       const data = {
         user: result,
-        token: Auth.signJWT({
-          id: result.id,
-          email: result.email,
-        }),
+        token: Auth.signJWT({ id: result.id, email: result.email }),
       };
-      res.status(202);
+      debugServer('Controller result login:', data);
+      res.status(200);
       res.statusMessage = 'Accepted';
       res.json(data);
     } catch (error) {
@@ -46,8 +33,10 @@ export class UsersController {
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
+      debugServer('Controller body create:', req.body);
+      if (!req.body) throw new HttpError(400, 'Bad Request');
       const result = await this.repo.create(req.body);
-
+      debugServer('Controller result create:', result);
       res.status(201);
       res.statusMessage = 'Created';
       res.json(result);
