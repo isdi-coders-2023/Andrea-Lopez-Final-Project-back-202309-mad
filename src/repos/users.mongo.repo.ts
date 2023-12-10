@@ -1,12 +1,11 @@
 import createDebug from 'debug';
-import { Repository } from './repo';
-import { UserLogin, User } from '../entities/user.js';
+import { UserLogin, User } from '../entities/user';
 import { HttpError } from '../types/http.error.js';
 import { Auth } from '../services/auth.js';
 import { UserModel } from './users.mongo.models.js';
 const debug = createDebug('PF:users:mongo:repo');
 
-export class UsersMongoRepo implements Repository<User> {
+export class UsersMongoRepo {
   constructor() {
     debug('Instantiated');
   }
@@ -16,14 +15,15 @@ export class UsersMongoRepo implements Repository<User> {
     return result;
   }
 
-  async create(newItem: Omit<User, 'id'>): Promise<User> {
-    newItem.passwd = await Auth.hash(newItem.passwd);
-    const result: User = await UserModel.create(newItem);
+  async create(newUser: Omit<User, 'id'>): Promise<User> {
+    newUser.passwd = await Auth.hash(newUser.passwd);
+    const result: User = await UserModel.create(newUser);
     return result;
   }
 
   async login(loginUser: UserLogin): Promise<User> {
     const result = await UserModel.findOne({ email: loginUser.email }).exec();
+    debug(result, 'resultado del login');
     if (!result || !(await Auth.compare(loginUser.passwd, result.passwd)))
       throw new HttpError(401, 'Unauthorized');
     return result;
