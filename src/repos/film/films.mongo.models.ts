@@ -15,7 +15,13 @@ const filmsSchema = new Schema<Film>({
     type: String,
   },
   image: {
-    type: String,
+    publicId: String,
+    size: Number,
+    height: Number,
+    width: Number,
+    format: String,
+    url: String,
+    cloudinaryURL: String,
   },
   user: {
     type: String,
@@ -30,4 +36,4 @@ filmsSchema.set('toJSON', {
   },
 });
 
-export const UserModel = model<Film>('User', filmsSchema, 'users');
+export const FilmModel = model<Film>('Film', filmsSchema, 'films');
