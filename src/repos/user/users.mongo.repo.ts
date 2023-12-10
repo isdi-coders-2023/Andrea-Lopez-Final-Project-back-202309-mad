@@ -1,7 +1,7 @@
 import createDebug from 'debug';
-import { UserLogin, User } from '../entities/user';
-import { HttpError } from '../types/http.error.js';
-import { Auth } from '../services/auth.js';
+import { UserLogin, User } from '../../entities/user';
+import { HttpError } from '../../types/http.error.js';
+import { Auth } from '../../services/auth.js';
 import { UserModel } from './users.mongo.models.js';
 const debug = createDebug('PF:users:mongo:repo');
 

@@ -1,28 +1,27 @@
 import { Schema, model } from 'mongoose';
-import { User } from '../entities/user.js';
+import { Film } from '../../entities/film';
 
-const usersSchema = new Schema<User>({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  passwd: {
-    type: String,
-    required: true,
-  },
-
-  name: {
+const filmsSchema = new Schema<Film>({
+  title: {
     type: String,
   },
-  surname: {
+  about: {
     type: String,
   },
-  age: {
+  decade: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
+  image: {
+    type: String,
+  },
+  user: {
     type: String,
   },
 });
-usersSchema.set('toJSON', {
+filmsSchema.set('toJSON', {
   transform(_document, returnedObject) {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
@@ -31,4 +30,4 @@ usersSchema.set('toJSON', {
   },
 });
 
-export const UserModel = model<User>('User', usersSchema, 'users');
+export const UserModel = model<Film>('User', filmsSchema, 'users');

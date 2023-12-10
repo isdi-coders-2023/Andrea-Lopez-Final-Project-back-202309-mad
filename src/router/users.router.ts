@@ -1,6 +1,6 @@
 import createDebug from 'debug';
 import { Router as createRouter } from 'express';
-import { UsersMongoRepo } from '../repos/users.mongo.repo.js';
+import { UsersMongoRepo } from '../repos/user/users.mongo.repo.js';
 import { UsersController } from '../controllers/users.controller.js';
 // Import { AuthInterceptor } from '../middleware/auth.interceptor.js';
 const debug = createDebug('PF:router:users:router');
