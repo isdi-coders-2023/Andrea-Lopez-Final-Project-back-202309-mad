@@ -5,7 +5,7 @@ import { HttpError } from '../../types/http.error';
 
 const debug = createDebug('PF:films:mongo:repo');
 
-export class filmsMongoRepo {
+export class FilmMongoRepo {
   constructor() {
     debug('Instantiated repo...');
   }

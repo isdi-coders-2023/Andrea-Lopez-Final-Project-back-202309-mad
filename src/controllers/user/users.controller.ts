@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import createDebug from 'debug';
-import { HttpError } from '../types/http.error.js';
-import { Auth } from '../services/auth.js';
-import { UsersMongoRepo } from '../repos/user/users.mongo.repo.js';
+import { HttpError } from '../../types/http.error.js';
+import { Auth } from '../../services/auth.js';
+import { UsersMongoRepo } from '../../repos/user/users.mongo.repo.js';
 
 const debugServer = createDebug('PF:controllers:users');
 
