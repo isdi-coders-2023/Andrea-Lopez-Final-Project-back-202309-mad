@@ -2,15 +2,16 @@ import { NextFunction, Request, Response } from 'express';
 import createDebug from 'debug';
 import { FilmMongoRepo } from '../../repos/film/films.mongo.repo';
 import { HttpError } from '../../types/http.error';
+import { MediaFiles } from '../../services/media.file';
 
-const debug = createDebug('PF:controller:film');
+const debug = createDebug('PF:controllers:films');
 
-export class OffersController {
-  // LoudinaryService: CloudinaryMediaFiles;
+export class FilmsController {
+  cloudinaryService: MediaFiles;
 
   constructor(private repo: FilmMongoRepo) {
     this.repo = repo;
-    // This.cloudinaryService = new CloudinaryMediaFiles();
+    this.cloudinaryService = new MediaFiles();
     debug('Intanciando films controller...');
   }
 
@@ -40,16 +41,16 @@ export class OffersController {
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      // If (!req.file) throw new HttpError(400, 'Image is required');
-      // // Const imgData = await this.cloudinaryService.uploadImage(req.file.path);
+      if (!req.file) throw new HttpError(400, 'Image is required');
+      const imgData = await this.cloudinaryService.uploadImage(req.file.path);
 
-      // req.body.image = {
-      //   publicId: req.file?.filename,
-      //   format: req.file?.mimetype,
-      //   url: req.file?.path,
-      //   size: req.file?.size,
-      //   cloudinaryURL: imgData.url,
-      // };
+      req.body.image = {
+        publicId: req.file?.filename,
+        format: req.file?.mimetype,
+        url: req.file?.path,
+        size: req.file?.size,
+        cloudinaryURL: imgData.url,
+      };
 
       if (!req.body) throw new HttpError(406, 'Invalid body');
       const result = await this.repo.create(req.body);

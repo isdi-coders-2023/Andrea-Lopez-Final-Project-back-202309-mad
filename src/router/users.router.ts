@@ -5,7 +5,7 @@ import { UsersController } from '../controllers/user/users.controller.js';
 // Import { AuthInterceptor } from '../middleware/auth.interceptor.js';
 const debug = createDebug('PF:router:users:router');
 
-debug('Hello from routes');
+debug('Hello from users routes');
 
 export const usersRouter = createRouter();
 const repo = new UsersMongoRepo();
