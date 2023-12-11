@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import multer from 'multer';
 import createDebug from 'debug';
 
-const debugServer = createDebug('PF:middleware:file');
+const debug = createDebug('PF:middleware:file');
 
 export class FileInterceptor {
   singleFileStore(fileName = 'file', fileSize = 10_000_000) {
@@ -21,11 +21,11 @@ export class FileInterceptor {
 
     return (req: Request, res: Response, next: NextFunction) => {
       const previousBody = req.body;
-      debugServer('previousBody:', previousBody);
+      debug('previousBody:', previousBody);
       middleware(req, res, next);
-      debugServer('multer-body:', req.body);
+      debug('multer-body:', req.body);
       req.body = { ...previousBody, ...req.body };
-      debugServer('final-body:', req.body);
+      debug('final-body:', req.body);
     };
   }
 }
