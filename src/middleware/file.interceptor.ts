@@ -2,7 +2,8 @@ import { NextFunction, Request, Response } from 'express';
 import multer from 'multer';
 import createDebug from 'debug';
 
-const debug = createDebug('PF:middleware:file');
+const debug = createDebug('PF:middleware:file:interceptor');
+debug('Creando middleware for files');
 
 export class FileInterceptor {
   singleFileStore(fileName = 'file', fileSize = 10_000_000) {

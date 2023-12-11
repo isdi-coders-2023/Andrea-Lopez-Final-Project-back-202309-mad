@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import createDebug from 'debug';
-import { FilmMongoRepo } from '../../repos/film/films.mongo.repo';
-import { HttpError } from '../../types/http.error';
-import { MediaFiles } from '../../services/media.file';
+import { FilmMongoRepo } from '../../repos/film/films.mongo.repo.js';
+import { HttpError } from '../../types/http.error.js';
+import { MediaFiles } from '../../services/media.file.js';
 
 const debug = createDebug('PF:controllers:films');
 

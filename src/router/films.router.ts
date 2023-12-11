@@ -1,9 +1,9 @@
 import createDebug from 'debug';
 import { Router as createRouter } from 'express';
-import { FilmMongoRepo } from '../repos/film/films.mongo.repo';
-import { FilmsController } from '../controllers/film/films.controller';
-import { AuthInterceptor } from '../middleware/auth.interceptor';
-import { FileInterceptor } from '../middleware/file.interceptor';
+import { FilmMongoRepo } from '../repos/film/films.mongo.repo.js';
+import { FilmsController } from '../controllers/film/films.controller.js';
+import { AuthInterceptor } from '../middleware/auth.interceptor.js';
+import { FileInterceptor } from '../middleware/file.interceptor.js';
 
 const debug = createDebug('PF:router:films:router');
 

@@ -1,7 +1,7 @@
 import createDebug from 'debug';
 import { Film } from '../../entities/film';
-import { FilmModel } from './films.mongo.models';
-import { HttpError } from '../../types/http.error';
+import { FilmModel } from './films.mongo.models.js';
+import { HttpError } from '../../types/http.error.js';
 
 const debug = createDebug('PF:films:mongo:repo');
 
