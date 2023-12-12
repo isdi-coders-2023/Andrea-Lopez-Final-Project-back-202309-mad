@@ -32,7 +32,7 @@ filmsRouter.post(
   controller.create.bind(controller)
 );
 
-// EDIT / Update Film
+// EDIT / Update Film (PENDIENTE LO DE MULTER)
 
 filmsRouter.post(
   '/:id',
@@ -43,8 +43,4 @@ filmsRouter.post(
 
 // Eliminar pelicula
 
-filmsRouter.post(
-  ':/id',
-  fileInterceptor.singleFileStore('image').bind(fileInterceptor),
-  interceptor.authorization.bind(interceptor)
-);
+filmsRouter.delete(':/id', interceptor.authorization.bind(interceptor));

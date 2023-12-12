@@ -9,13 +9,10 @@ const debug = createDebug('EPV:mediaFiles');
 export class MediaFiles {
   constructor() {
     cloudinary.config({
-      cloud_name: 'dgnncaecc',
-      api_key: '727831547562915',
-      api_secret: process.env.CLOUDINARY_SECRET,
       secure: true,
     });
     debug('Instantiated');
-    debug('key', cloudinary.config().api_key);
+    debug('key', cloudinary.config());
   }
 
   async uploadImage(imagePath: string) {

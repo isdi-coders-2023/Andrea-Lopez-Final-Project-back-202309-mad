@@ -1,14 +1,16 @@
-import { User, UserLogin } from '../entities/user';
+import { User, UserLogin } from '../../entities/user';
+import { Auth } from '../../services/auth';
+import { HttpError } from '../../types/http.error';
 
-import { UserModel } from './user/users.mongo.models.js';
-import { UsersMongoRepo } from './user/users.mongo.repo';
+import { UserModel } from './users.mongo.models.js';
+import { UsersMongoRepo } from './users.mongo.repo';
 
-jest.mock('./users.mongo.models');
-
+jest.mock('./users.mongo.models.js');
 describe('Given UsersMongoRepo class', () => {
   let repo: UsersMongoRepo;
   describe('When we instaited it without errors', () => {
     const exec = jest.fn().mockResolvedValue('login');
+
     beforeEach(() => {
       const mockQueryMethod = jest.fn().mockReturnValue({
         exec,
@@ -16,7 +18,9 @@ describe('Given UsersMongoRepo class', () => {
       UserModel.create = jest.fn().mockReturnValue('Created');
       repo = new UsersMongoRepo();
       UserModel.findOne = mockQueryMethod;
-      UserModel.find = mockQueryMethod;
+
+      Auth.hash = jest.fn().mockResolvedValue('testHash');
+      Auth.compare = jest.fn().mockResolvedValue(true);
     });
     test('Then it should execute create', async () => {
       const result = await repo.create({} as Omit<User, 'id'>);
@@ -26,8 +30,9 @@ describe('Given UsersMongoRepo class', () => {
     });
 
     test('Then it should execute login', async () => {
-      const result = await repo.login({ email: '' } as UserLogin);
+      const result = await repo.login({} as UserLogin);
       expect(UserModel.findOne).toHaveBeenCalled();
+      expect(Auth.compare).toHaveBeenCalled();
       expect(result).toBe('login');
     });
 
@@ -39,17 +44,18 @@ describe('Given UsersMongoRepo class', () => {
   describe('When we instantiate iw with errors', () => {
     const mockError = new Error('Invalid Credentials');
     const exec = jest.fn().mockRejectedValue(mockError);
+
     beforeEach(() => {
       const mockQueryMethod = jest.fn().mockReturnValue({
         exec,
       });
       UserModel.findOne = mockQueryMethod;
-      repo = new UsersMongoRepo();
     });
-    test('Then it should execute with an error in the credential on Login', async () => {
-      const result = await repo.login({} as UserLogin);
-      expect(UserModel.findOne).toHaveBeenCalled();
-      expect(result).toHaveBeenCalledWith(mockError);
+    test('Then it should execute with fail login', async () => {
+      const loginUser = {} as unknown as UserLogin;
+      expect(repo.login(loginUser)).rejects.toThrow(
+        new HttpError(401, 'Unauthorized', 'Login not possible')
+      );
     });
   });
 });

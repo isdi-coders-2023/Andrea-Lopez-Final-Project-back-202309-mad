@@ -22,11 +22,23 @@ export class FileInterceptor {
 
     return (req: Request, res: Response, next: NextFunction) => {
       const previousBody = req.body;
-      debug('previousBody:', previousBody);
-      middleware(req, res, next);
-      debug('multer-body:', req.body);
-      req.body = { ...previousBody, ...req.body };
-      debug('final-body:', req.body);
+
+      middleware(req, res, (err) => {
+        if (err) {
+          // Handle the error from multer
+          return next(err);
+        }
+
+        debug('multer-body:', req.body);
+
+        // Add the multer data to req.body
+        req.body = { ...previousBody, ...req.body };
+
+        debug('final-body:', req.body);
+
+        // Call the next middleware or route handler
+        next();
+      });
     };
   }
 }
