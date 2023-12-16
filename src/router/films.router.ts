@@ -44,3 +44,5 @@ filmsRouter.post(
 // Eliminar pelicula
 
 filmsRouter.delete(':/id', interceptor.authorization.bind(interceptor));
+
+// Peliculas del usuario

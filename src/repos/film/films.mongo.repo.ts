@@ -39,4 +39,17 @@ export class FilmMongoRepo {
     const result = await FilmModel.findByIdAndDelete(id).exec();
     if (!result) throw new HttpError(404, 'Not Found', 'Error');
   }
+
+  async getByIdMyFilms(myFilms: []): Promise<Film> {
+    // Suponiendo que el modelo de películas se llama FilmsModel
+    const result = await FilmModel.find({ _id: { $in: myFilms } })
+      .populate('user', {
+        films: 0,
+      })
+      .exec();
+
+    if (!result) throw new HttpError(404, 'Not Found', 'GetById not possible');
+
+    return result as unknown as Film;
+  }
 }

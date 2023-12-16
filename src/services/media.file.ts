@@ -2,7 +2,7 @@
 import { v2 as cloudinary } from 'cloudinary';
 import createDebug from 'debug';
 import { HttpError } from '../types/http.error.js';
-import { ImgData } from '../types/img.data.js';
+import { ImageData } from '../types/img.data.js';
 
 const debug = createDebug('EPV:mediaFiles');
 
@@ -23,7 +23,7 @@ export class MediaFiles {
         overwrite: true,
       });
 
-      const imgData: ImgData = {
+      const imageData: ImageData = {
         url: uploadApiResponse.url,
         publicId: uploadApiResponse.public_id,
         size: uploadApiResponse.bytes,
@@ -32,7 +32,7 @@ export class MediaFiles {
         format: uploadApiResponse.format,
       };
 
-      return imgData;
+      return imageData;
     } catch (err) {
       const error = err as Error;
       throw new HttpError(406, 'Not Acceptable', error.message);
