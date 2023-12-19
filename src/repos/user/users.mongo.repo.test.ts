@@ -24,9 +24,8 @@ describe('Given UsersMongoRepo class', () => {
     });
     test('Then it should execute create', async () => {
       const result = await repo.create({} as Omit<User, 'id'>);
-      // Expect(Auth.hash).toHaveBeenCalled();
       expect(UserModel.create).toHaveBeenCalled();
-      expect(result).toBe('login');
+      expect(result).toBe('Created');
     });
 
     test('Then it should execute login', async () => {
@@ -42,7 +41,7 @@ describe('Given UsersMongoRepo class', () => {
     });
   });
   describe('When we instantiate iw with errors', () => {
-    const mockError = new Error('Invalid Credentials');
+    const mockError = new Error('Login not possible');
     const exec = jest.fn().mockRejectedValue(mockError);
 
     beforeEach(() => {

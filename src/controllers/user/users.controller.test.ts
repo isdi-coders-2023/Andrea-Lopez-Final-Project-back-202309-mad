@@ -4,7 +4,7 @@ import { UsersMongoRepo } from '../../repos/user/users.mongo.repo.js';
 import { User } from '../../entities/user.js';
 import { HttpError } from '../../types/http.error.js';
 
-jest.mock('../services/auth.js');
+jest.mock('../../services/auth.js');
 
 describe('Given UserController class', () => {
   let controller: UsersController;

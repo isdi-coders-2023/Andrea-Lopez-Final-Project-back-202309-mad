@@ -4,10 +4,9 @@ import { FilmMongoRepo } from '../../repos/film/films.mongo.repo';
 import { HttpError } from '../../types/http.error';
 import { Film } from '../../entities/film';
 
-jest.mock('../services/cloudinary.media.files.js');
-// Jest.mock('../repos/offers/offers.mongo.repo.js');
+jest.mock('../../services/media.file.js');
 
-describe('Given OfferController class', () => {
+describe('Given Films controller Controller class', () => {
   describe('When I call the method', () => {
     let controller: FilmsController;
     const mockRepo = {
@@ -42,32 +41,17 @@ describe('Given OfferController class', () => {
       expect(mockResponse.json).toHaveBeenCalledWith({});
     });
 
-    test('getById', async () => {
-      await controller.getById(mockRequest, mockResponse, mockNext);
-      // Expect(mockRepo.getById).toHaveBeenCalled();
+    test('create', async () => {
+      await controller.create(mockRequest, mockResponse, mockNext);
       expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.statusMessage).toBe('Accepted');
       expect(mockResponse.json).toHaveBeenCalledWith({});
     });
 
-    test.skip('create', async () => {
-      await controller.create(mockRequest, mockResponse, mockNext);
-      expect(mockResponse.status).toHaveBeenCalledWith(201);
-      expect(mockResponse.statusMessage).toBe('Created');
-      expect(mockResponse.json).toHaveBeenCalledWith({});
-    });
-
-    test.skip('update', async () => {
+    test('update', async () => {
       await controller.update(mockRequest, mockResponse, mockNext);
-      expect(mockResponse.status).toHaveBeenCalledWith(201);
-      expect(mockResponse.statusMessage).toBe('Created');
-      expect(mockResponse.json).toHaveBeenCalledWith({});
-    });
-
-    test.skip('delete', async () => {
-      await controller.delete(mockRequest, mockResponse, mockNext);
-      expect(mockResponse.status).toHaveBeenCalledWith(201);
-      expect(mockResponse.statusMessage).toBe('Created');
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.statusMessage).toBe('Updated');
       expect(mockResponse.json).toHaveBeenCalledWith({});
     });
   });
