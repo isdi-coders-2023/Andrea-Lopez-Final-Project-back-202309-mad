@@ -3,5 +3,5 @@ import jwt from 'jsonwebtoken';
 
 export type TokenPayload = {
   id: User['id'];
-  email: string;
+  email: User['email'];
 } & jwt.JwtPayload;

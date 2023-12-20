@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import createDebug from 'debug';
-import { HttpError } from '../types/http.error.js';
-import { Auth } from '../services/auth.js';
-import { UsersMongoRepo } from '../repos/users.mongo.repo.js';
+import { HttpError } from '../../types/http.error.js';
+import { Auth } from '../../services/auth.js';
+import { UsersMongoRepo } from '../../repos/user/users.mongo.repo.js';
 
 const debugServer = createDebug('PF:controllers:users');
 
@@ -32,7 +32,6 @@ export class UsersController {
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      debugServer('Controller body create:', req.body);
       if (!req.body) throw new HttpError(400, 'Bad Request');
       const result = await this.repo.create(req.body);
       debugServer('Controller result create:', result);
@@ -41,6 +40,7 @@ export class UsersController {
       res.json(result);
     } catch (error) {
       next(error);
+      debugServer('Controller', req.body);
     }
   }
 }
