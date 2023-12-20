@@ -23,5 +23,6 @@ export default {
     'src/middleware/file.interceptor.ts',
     'src/router/users.router.ts',
     'src/router/films.router.ts',
+    ' src/middleware/file.interceptor.ts',
   ],
 };
