@@ -20,9 +20,9 @@ export default {
     'src/controllers/film/films.controller.ts',
     'src/repos/film/films.mongo.repo.test.ts',
     'src/app.ts',
-    'src/middleware/file.interceptor.ts',
+
     'src/router/users.router.ts',
     'src/router/films.router.ts',
-    ' src/middleware/file.interceptor.ts',
+    'src/middleware/file.interceptor.ts',
   ],
 };
