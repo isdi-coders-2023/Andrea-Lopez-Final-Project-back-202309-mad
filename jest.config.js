@@ -15,5 +15,9 @@ export default {
     'src/types/*.ts',
     'src/repos/user/users.mongo.repo.ts',
     'src/repos/user/users.mongo.models.ts',
+    'src/repos/film/films.mongo.repo.ts',
+    'src/repos/film/films.mongo.models.ts',
+    'src/controllers/film/films.controller.ts',
+    'src/repos/film/films.mongo.repo.test.ts',
   ],
 };
