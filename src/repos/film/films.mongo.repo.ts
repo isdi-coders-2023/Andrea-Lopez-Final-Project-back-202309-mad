@@ -36,8 +36,10 @@ export class FilmMongoRepo {
   }
 
   async delete(id: string): Promise<void> {
+    debug('id');
     const result = await FilmModel.findByIdAndDelete(id).exec();
     if (!result) throw new HttpError(404, 'Not Found', 'Error');
+    debug('id');
   }
 
   async getByIdMyFilms(myFilms: []): Promise<Film> {

@@ -46,7 +46,6 @@ describe('Given UserController class', () => {
   describe('When we instantiate it with errors', () => {
     let mockError = {} as unknown as HttpError;
 
-    // Const mockError = new Error('Bad Request');
     const mockRepoError = {
       login: jest.fn().mockRejectedValue({}),
       create: jest.fn().mockRejectedValue({}),

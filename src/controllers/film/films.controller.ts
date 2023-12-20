@@ -76,12 +76,10 @@ export class FilmsController {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      if (!req.params.id) throw new HttpError(400, 'Bad Request');
-      const result = await this.repo.delete(req.params.id);
-      debug('Controller result create:', result);
-      res.status(200);
-      res.statusMessage = 'Deleted';
-      res.json(result);
+      await this.repo?.delete(req.params.id);
+      res.status(204);
+      res.statusMessage = 'No Content';
+      res.json();
     } catch (error) {
       next(error);
     }

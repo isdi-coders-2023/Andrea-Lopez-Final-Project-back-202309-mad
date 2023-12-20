@@ -15,15 +15,9 @@ const controller = new FilmsController(repo);
 const interceptor = new AuthInterceptor();
 const fileInterceptor = new FileInterceptor();
 
-// CRUD
-
-// Get All Films
 filmsRouter.get('/', controller.getAll.bind(controller));
 
-// Get Any Fil
 filmsRouter.get('/:id', controller.getById.bind(controller));
-
-// Create User Film
 
 filmsRouter.post(
   '/',
@@ -32,8 +26,6 @@ filmsRouter.post(
   controller.create.bind(controller)
 );
 
-// EDIT / Update Film (PENDIENTE LO DE MULTER)
-
 filmsRouter.post(
   '/:id',
   fileInterceptor.singleFileStore('image').bind(fileInterceptor),
@@ -41,8 +33,8 @@ filmsRouter.post(
   controller.update.bind(controller)
 );
 
-// Eliminar pelicula
-
-filmsRouter.delete(':/id', interceptor.authorization.bind(interceptor));
-
-// Peliculas del usuario
+filmsRouter.delete(
+  '/:id',
+  interceptor.authorization.bind(interceptor),
+  controller.delete.bind(controller)
+);
