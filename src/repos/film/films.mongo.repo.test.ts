@@ -4,7 +4,7 @@ import { FilmModel } from './films.mongo.models';
 jest.mock('./films.mongo.models');
 
 describe('FilmMongoRepo', () => {
-  let filmRepo;
+  let filmRepo: FilmMongoRepo;
 
   beforeEach(() => {
     filmRepo = new FilmMongoRepo();
@@ -17,7 +17,7 @@ describe('FilmMongoRepo', () => {
   describe('getAll', () => {
     it('should return all films', async () => {
       const mockFilms = [{ title: 'Film 1' }, { title: 'Film 2' }];
-      FilmModel.find.mockResolvedValue(mockFilms);
+      FilmModel.find = jest.fn().mockResolvedValue(mockFilms);
 
       const result = await filmRepo.getAll();
 
@@ -29,7 +29,7 @@ describe('FilmMongoRepo', () => {
   describe('getById', () => {
     it('should return a film by ID', async () => {
       const mockFilm = { _id: '123', title: 'Film 1' };
-      FilmModel.findById.mockResolvedValue(mockFilm);
+      FilmModel.findById = jest.fn().mockResolvedValue(mockFilm);
 
       const result = await filmRepo.getById('123');
 
@@ -38,9 +38,8 @@ describe('FilmMongoRepo', () => {
     });
 
     it('should throw a 404 error if film is not found', async () => {
-      FilmModel.findById.mockResolvedValue(null);
-
-      await expect(filmRepo.getById('nonexistentId')).rejects.toThrowError(
+      FilmModel.findById = jest.fn().mockResolvedValue(null);
+      await expect(filmRepo.getById('nonexistentId')).rejects.toThrow(
         'Not Found'
       );
     });
