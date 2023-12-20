@@ -6,7 +6,7 @@ export default {
   testPathIgnorePatterns: ['dist'],
   resolver: 'jest-ts-webcompat-resolver',
   coveragePathIgnorePatterns: [
-    'src/main.tsx',
+    'src/index.ts',
     'src/config.tsx',
     'src/services/storage.ts',
     'src/store/store.ts',
@@ -19,5 +19,7 @@ export default {
     'src/repos/film/films.mongo.models.ts',
     'src/controllers/film/films.controller.ts',
     'src/repos/film/films.mongo.repo.test.ts',
+    'src/app.ts',
+    'src/middleware/file.interceptor.ts',
   ],
 };
